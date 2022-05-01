@@ -12,13 +12,23 @@ const dbName = process.env.MONGO_DB || "test";
 const app = express();
 const port = process.env.PORT || 3006;
 
-app.get("/", async (req: Request, res: Response) => {});
+app.get("/", async (req: Request, res: Response) => {
+    res.send("Nothing to see here");
+});
 
 app.get("/fill-data", async (req: Request, res: Response) => {
     let data: WorldDataResponseType[] = [];
-    await axios.get("https://api.covid19api.com/world").then((response) => {
-        data = response.data;
-    });
+    await axios
+        .get<WorldDataResponseType[]>("https://api.covid19api.com/world")
+        .then((response) => {
+            response.data.forEach((item) => {
+                data.push({
+                    ...item,
+                    Date: new Date(item.Date),
+                });
+            });
+        });
+
     try {
         await client.connect();
         const db = client.db(dbName);
@@ -29,6 +39,40 @@ app.get("/fill-data", async (req: Request, res: Response) => {
         res.send("ERROR");
     } finally {
         await client.close();
+    }
+});
+
+app.get("/all-world-daily-data", async (req: Request, res: Response) => {
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection("WorldDaily");
+        const data = await collection.find().toArray();
+        res.status(200).json(data);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    } finally {
+        client.close();
+    }
+});
+
+app.get("/world-data", async (req: Request, res: Response) => {
+    const start = (req.query.start as string) || "2021-01-01";
+    const end = (req.query.end as string) || "2021-12-31";
+
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection("WorldDaily");
+        const data = await collection
+            .find({ Date: { $gte: new Date(start), $lte: new Date(end) } })
+            .toArray();
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).send(error);
+    } finally {
+        client.close();
     }
 });
 
