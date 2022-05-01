@@ -5,7 +5,7 @@ type WorldDataResponseType = {
     TotalDeaths: number;
     NewRecovered: number;
     TotalRecovered: number;
-    Date: string;
+    Date: Date;
 };
 
 export default WorldDataResponseType;
