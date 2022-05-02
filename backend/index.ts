@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import axios from "axios";
 import "dotenv/config";
 import WorldDataResponseType from "./types/WorldDataResponseType";
@@ -12,7 +12,15 @@ const dbName = process.env.MONGO_DB || "test";
 const app = express();
 const port = process.env.PORT || 3006;
 
+app.all("*", function (req: Request, res: Response, next: NextFunction) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
 app.get("/", async (req: Request, res: Response) => {
+    // Get List Of Cases Per Country By Case Type (confirmed, recovered, deaths)
+    const response = await axios.get("https://corona.lmao.ninja/v2/countries");
     res.send("Nothing to see here");
 });
 
