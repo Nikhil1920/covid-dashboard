@@ -1,16 +1,23 @@
-import { Container, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import {
+    Box,
+    Container,
+    Paper,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
+    TextField,
+    Typography,
 } from "@mui/material";
+
 import addCommas from "../utils/utils";
+
+import MuiLink from "@mui/material/Link";
+import NextLink from "next/link";
 
 type CovidDataType = {
     country: string;
@@ -64,7 +71,22 @@ const Country = () => {
     return (
         <>
             <Container maxWidth="lg">
-                <h1>Country wise data table</h1>
+                <Box
+                    mt={4}
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <Typography variant="h4" component="h1">
+                        Country wise data table
+                    </Typography>
+                    <NextLink href="/" passHref>
+                        <MuiLink href="/" variant="h4" underline="hover">
+                            Home
+                        </MuiLink>
+                    </NextLink>
+                </Box>
                 <TextField
                     variant="outlined"
                     value={search}
