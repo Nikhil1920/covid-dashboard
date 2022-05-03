@@ -48,21 +48,46 @@ const Home: NextPage = () => {
     });
 
     useEffect(() => {
-        async function fetchData() {
+        const fetchData = async () => {
             const fetched = await fetch(
                 configData.API_URL + "/all-world-daily-data"
             );
             const data: WorldDataResponseType[] = await fetched.json();
-            // sort by date
-            data.sort((a, b) => {
-                return new Date(a.Date).getTime() - new Date(b.Date).getTime();
-            });
-            setData(data);
-        }
+
+            setData(sortDatabyDate(data));
+        };
         fetchData();
     }, []);
 
-    useEffect(() => {}, [filters]);
+    useEffect(() => {
+        const fetchDataByDate = async () => {
+            const fetched = await fetch(
+                configData.API_URL +
+                    "/world-data?start=" +
+                    filters.startDate +
+                    "&end=" +
+                    filters.endDate
+            );
+            const data: WorldDataResponseType[] = await fetched.json();
+
+            setData(sortDatabyDate(data));
+        };
+        if (showFilters && filters.startDate && filters.endDate) {
+            fetchDataByDate();
+        }
+    }, [filters]);
+
+    const sortDatabyDate = (
+        data: WorldDataResponseType[]
+    ): WorldDataResponseType[] => {
+        if (Array.isArray(data)) {
+            return data.sort((a, b) => {
+                return new Date(a.Date).getTime() - new Date(b.Date).getTime();
+            });
+        } else {
+            return [];
+        }
+    };
 
     const [chartData, setChartData] = useState<any>({
         labels: [],
