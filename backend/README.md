@@ -11,3 +11,5 @@ npm run dev
 ```
 
 if you have a port environment variable set, it will use that port, otherwise it will use 3006
+
+To connect to the database, rename the .env.example to .env and fill in the values.

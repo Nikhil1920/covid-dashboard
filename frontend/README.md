@@ -1,15 +1,9 @@
-# MUI Next JS Starter
+## Frontend for Covid Dashboard App
 
-This is a starter project for MUI Next JS.
+Built using React JS, Next.js, Chart.js, TypeScript, and Material UI.
 
-It uses TypeScript and pwa is enabled.
+Avoided most next.js specific features like server side rendering, and client side rendering on purpose.
 
-## Quick Start
+Just used next for routing.
 
-To get started clone the repository using the following command:
-
-```
-npx degit https://github.com/Nikhil1920/next-js-mui-pwa-starter.git
-```
-
-change the newly created directory name to your liking.
+Needs work to be done to abstract the functinality into smaller reusable components.
