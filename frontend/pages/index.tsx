@@ -73,6 +73,16 @@ const Home: NextPage = () => {
             setData(sortDatabyDate(data));
         };
         if (showFilters && filters.startDate && filters.endDate) {
+            if (
+                new Date(filters.startDate).getTime() >
+                new Date(filters.endDate).getTime()
+            ) {
+                alert("Start date must be before end date");
+                setFilters({
+                    ...filters,
+                    startDate: filters.endDate,
+                });
+            }
             fetchDataByDate();
         }
     }, [filters]);
