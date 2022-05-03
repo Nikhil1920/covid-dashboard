@@ -1,5 +1,7 @@
+import configData from "./configData";
+
 const addCommas = (inp: number) => {
-    return inp.toLocaleString("en-IN");
+    return inp.toLocaleString(configData.locale);
 };
 
 export default addCommas;
