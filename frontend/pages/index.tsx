@@ -39,6 +39,9 @@ import {
     TextField,
 } from "@mui/material";
 
+import MuiLink from "@mui/material/Link";
+import NextLink from "next/link";
+
 const Home: NextPage = () => {
     const [data, setData] = useState<WorldDataResponseType[]>([]);
     const [showFilters, setShowFilters] = useState(false);
@@ -172,47 +175,60 @@ const Home: NextPage = () => {
                 />
             </Head>
             <Container maxWidth="lg">
-                <Box my={4}>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={showFilters}
-                                onChange={(e) => {
-                                    setShowFilters(e.target.checked);
-                                }}
-                            />
-                        }
-                        label="Filter"
-                    />
-                    {showFilters && (
-                        <Box>
-                            <p>Start : </p>
-                            <TextField
-                                variant="outlined"
-                                type="date"
-                                value={filters.startDate}
-                                onChange={(e) => {
-                                    setFilters({
-                                        ...filters,
-                                        startDate: e.target.value,
-                                    });
-                                }}
-                            />
+                <Box
+                    my={4}
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <Box>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={showFilters}
+                                    onChange={(e) => {
+                                        setShowFilters(e.target.checked);
+                                    }}
+                                />
+                            }
+                            label="Filter"
+                        />
+                        {showFilters && (
+                            <Box>
+                                <p>Start : </p>
+                                <TextField
+                                    variant="outlined"
+                                    type="date"
+                                    value={filters.startDate}
+                                    onChange={(e) => {
+                                        setFilters({
+                                            ...filters,
+                                            startDate: e.target.value,
+                                        });
+                                    }}
+                                />
 
-                            <p>End : </p>
-                            <TextField
-                                variant="outlined"
-                                type="date"
-                                value={filters.endDate}
-                                onChange={(e) => {
-                                    setFilters({
-                                        ...filters,
-                                        endDate: e.target.value,
-                                    });
-                                }}
-                            />
-                        </Box>
-                    )}
+                                <p>End : </p>
+                                <TextField
+                                    variant="outlined"
+                                    type="date"
+                                    value={filters.endDate}
+                                    onChange={(e) => {
+                                        setFilters({
+                                            ...filters,
+                                            endDate: e.target.value,
+                                        });
+                                    }}
+                                />
+                            </Box>
+                        )}
+                    </Box>
+                    <NextLink href="/country" passHref>
+                        <MuiLink href="/country" variant="h4" underline="hover">
+                            Country Wise Data
+                        </MuiLink>
+                    </NextLink>
                 </Box>
                 <Box
                     sx={{
