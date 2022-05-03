@@ -1,5 +1,6 @@
 const configData = {
-    API_URL: "http://localhost:3006",
+    API_URL: "https://cov-dash-back.herokuapp.com",
+    locale: "en-IN",
 };
 
 export default configData;
